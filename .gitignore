@@ -1,0 +1,22 @@
+# Eclipse
+.metadata/
+
+# Maven
+**/target/
+
+# STS
+.sts4-cache/
+
+# Logs
+*.log
+
+# OS Files
+Thumbs.db
+.DS_Store
+
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
