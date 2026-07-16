@@ -1,8 +1,11 @@
 package com.Userver.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +55,23 @@ public class UserController {
     public LoginResponseDto login(@RequestBody LoginRequestDto request) {
     	
     	return services.login(request) ;
+    }
+    
+    @GetMapping("/profile")
+    public String profile() {
+        return "Welcome " + SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+    
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
+    public String User() {
+    	return "welcome USER";
+    }
+    
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String Login() {
+    	return "welcome ADMIN";
     }
 	
 	
