@@ -44,8 +44,8 @@ public class Product {
 			return Id;
 		}
 
-		public void setId(Long pId) {
-			this.Id = Id;
+		public void setId(Long id) {
+			this.Id = id;
 		}
 
 		public String getName() {
