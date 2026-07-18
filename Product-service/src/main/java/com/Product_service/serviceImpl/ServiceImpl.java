@@ -1,7 +1,9 @@
 package com.Product_service.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -158,5 +160,34 @@ public class ServiceImpl implements ProductService{
 //	 Pageable pageable = PageRequest.of(page, size, Sort.by("price").ascending()); for sorting
 	 Page<Product> products = productRepository.findAll(pageable);
 		return products.map(this::mapToDto);
+	}
+	@Override
+	public List<ProductResponseDto> searchByCategory(String category) {
+		return productRepository.findByCategory(category).stream().map(this::mapToDto)
+	            .toList();
+		
+	}
+	@Override
+	public List<ProductResponseDto> searchByName(String name) {
+		return productRepository.findByName(name).stream().map(this::mapToDto).toList();
+	}
+	@Override
+	public List<ProductResponseDto> searchByNameAndPrice(String name, BigDecimal price) {
+		List<ProductResponseDto> response = productRepository.findByNameAndPrice(name, price).stream().map(this::mapToDto).toList();
+		return response;
+	}
+	@Override
+	public List<ProductResponseDto> searchByPriceLessThan(BigDecimal price) {
+		return productRepository.findByPriceLessThan(price).stream().map(this::mapToDto).toList();
+	}
+	@Override
+	public List<ProductResponseDto> searchByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
+		
+		return productRepository.findByPriceBetween(minPrice, maxPrice).stream().map(this::mapToDto).toList();
+	}
+	@Override
+	public List<ProductResponseDto> searchByNameContaining(String keyword) {
+		
+		return productRepository.findByNameContaining(keyword).stream().map(this::mapToDto).toList();
 	}
 }

@@ -1,5 +1,6 @@
 package com.Product_service.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -23,6 +24,14 @@ public interface ProductService {
 		
 		Page<ProductResponseDto> getAllProducts(int page, int size,
 				String sortBy, String direction);
+		
+		List<ProductResponseDto> searchByCategory(String category);
+		List<ProductResponseDto> searchByName(String name);
+		
+		List<ProductResponseDto> searchByNameAndPrice(String name, BigDecimal price);
+		List<ProductResponseDto>  searchByPriceLessThan(BigDecimal price);
+		List<ProductResponseDto> searchByPriceRange(BigDecimal minPrice, BigDecimal maxPrice);
+	    List<ProductResponseDto> searchByNameContaining(String keyword);
 			
 
 }
