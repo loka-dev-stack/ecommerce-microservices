@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.order_service.client.ProductClient;
+import com.order_service.client.UserClient;
 import com.order_service.dto.OrderRequestDto;
 import com.order_service.dto.OrderResponseDto;
 import com.order_service.dto.ProductResponseDto;
+import com.order_service.dto.UserResponseDto;
 import com.order_service.entity.Orders;
 import com.order_service.repository.OrdersRepository;
 import com.order_service.service.OrderService;
@@ -22,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
     private OrdersRepository ordersrepo;
 	@Autowired
 	private ProductClient client;
+	@Autowired
+	private UserClient userClient;
 
 	private static final Logger logger =
             LoggerFactory.getLogger(OrderServiceImpl.class);
@@ -56,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public OrderResponseDto createOrder(OrderRequestDto dto) {
 	ProductResponseDto product = client.getProductById(dto.getProductId());
+	UserResponseDto user = userClient.getUserById(dto.getUserId());
 	   
 //	 Orders orders = new Orders();
 //	 orders.setUserId(dto.getUserId());
