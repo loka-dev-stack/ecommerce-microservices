@@ -2,6 +2,8 @@ package com.order_service.serviceImpl;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
     private OrdersRepository ordersrepo;
 	@Autowired
-	private ProductClient client;
+	private ProductClient productclient;
 	@Autowired
 	private UserClient userClient;
 
@@ -59,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderResponseDto createOrder(OrderRequestDto dto) {
-	ProductResponseDto product = client.getProductById(dto.getProductId());
+	ProductResponseDto product = productclient.getProductById(dto.getProductId());
 	UserResponseDto user = userClient.getUserById(dto.getUserId());
 	   
 //	 Orders orders = new Orders();
@@ -84,6 +86,45 @@ public class OrderServiceImpl implements OrderService {
 	    
 	    
 	return mapToResponse(save);
+	}
+
+	@Override
+	public OrderResponseDto getOrderById(Long id) {
+    Orders orders = ordersrepo.findById(id).orElseThrow(()->new RuntimeException());
+		
+		return mapToResponse(orders);
+	}
+
+	@Override
+	public List<OrderResponseDto> getAllOrders() {
+		
+		List<Orders> orders = ordersrepo.findAll();
+		return orders.stream().map(this::mapToResponse).toList();
+	}
+
+	@Override
+	public OrderResponseDto updateOrder(Long id, OrderRequestDto dto) {
+		Orders orders = ordersrepo.findById(id).orElseThrow(()-> new RuntimeException());
+	    userClient.getUserById(dto.getUserId());
+		ProductResponseDto product = productclient.getProductById(dto.getProductId());
+		
+			 orders.setUserId(dto.getUserId());
+			 orders.setProductId(dto.getProductId());
+			 orders.setQuantity(dto.getQuantity());
+			 orders.setDeliveryAddress(dto.getDeliveryAddress());
+			orders.setPrice(product.getPrice());
+			BigDecimal totalAmount = product.getPrice()
+		            .multiply(BigDecimal.valueOf(dto.getQuantity()));
+			orders.setTotalAmount(totalAmount);
+			
+			    Orders updateOrders = ordersrepo.save(orders);                      
+		return mapToResponse(updateOrders);
+	}
+
+	@Override
+	public void deleteById(Long Id) {
+		Orders order = ordersrepo.findById(Id).orElseThrow(()-> new RuntimeException());;
+		 ordersrepo.delete(order);
 	}
 	
 
