@@ -17,6 +17,7 @@ import com.order_service.dto.OrderResponseDto;
 import com.order_service.dto.ProductResponseDto;
 import com.order_service.dto.UserResponseDto;
 import com.order_service.entity.Orders;
+import com.order_service.exception.OrderNotFoundException;
 import com.order_service.repository.OrdersRepository;
 import com.order_service.service.OrderService;
 
@@ -90,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderResponseDto getOrderById(Long id) {
-    Orders orders = ordersrepo.findById(id).orElseThrow(()->new RuntimeException());
+    Orders orders = ordersrepo.findById(id).orElseThrow(()->new OrderNotFoundException("Order Not found "+id));
 		
 		return mapToResponse(orders);
 	}
@@ -104,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderResponseDto updateOrder(Long id, OrderRequestDto dto) {
-		Orders orders = ordersrepo.findById(id).orElseThrow(()-> new RuntimeException());
+		Orders orders = ordersrepo.findById(id).orElseThrow(()-> new OrderNotFoundException("Order Not found "+id));
 	    userClient.getUserById(dto.getUserId());
 		ProductResponseDto product = productclient.getProductById(dto.getProductId());
 		
@@ -123,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void deleteById(Long Id) {
-		Orders order = ordersrepo.findById(Id).orElseThrow(()-> new RuntimeException());;
+		Orders order = ordersrepo.findById(Id).orElseThrow(()-> new OrderNotFoundException("Order Not found "+Id));;
 		 ordersrepo.delete(order);
 	}
 	

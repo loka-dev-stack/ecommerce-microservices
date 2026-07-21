@@ -47,7 +47,7 @@ public class OrdersController {
 		return ResponseEntity.ok(orderService.getAllOrders());	
 	}
 	@PutMapping("/update/{id}")
-	public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long id ,@RequestBody OrderRequestDto dto){
+	public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long id ,@Valid @RequestBody OrderRequestDto dto){
 		return ResponseEntity.ok(orderService.updateOrder(id, dto));
 	}
 	@DeleteMapping("/{id}")
