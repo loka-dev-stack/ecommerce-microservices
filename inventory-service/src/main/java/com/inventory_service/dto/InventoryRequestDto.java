@@ -1,9 +1,15 @@
 package com.inventory_service.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class InventoryRequestDto {
-	
+	@NotNull(message="Product id is Required")
 	private Long productId;
+	@NotNull(message="Quantity is Required")
+	 @Min(value = 0, message = "Quantity cannot be negative")
     private Integer quantity;
+	
 	public Long getProductId() {
 		return productId;
 	}
