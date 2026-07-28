@@ -4,60 +4,59 @@ import java.math.BigDecimal;
 
 public class ProductResponseDto {
 	
-	 private Long id;
+	 private Long productId;
 	    private String name;
 	    private String description;
 	    private BigDecimal price;
-	    private Integer stock;
 	    private String category;
-		public Long getId() {
-			return id;
+		
+	    
+	    public Long getProductId() {
+			return productId;
 		}
-		public void setId(Long id) {
-			this.id = id;
+
+		public void setProductId(Long productId) {
+			this.productId = productId;
 		}
-		public String getName() {
+     	public String getName() {
 			return name;
 		}
+
 		public void setName(String name) {
 			this.name = name;
 		}
+
 		public String getDescription() {
 			return description;
 		}
+
 		public void setDescription(String description) {
 			this.description = description;
 		}
+
 		public BigDecimal getPrice() {
 			return price;
 		}
+
 		public void setPrice(BigDecimal price) {
 			this.price = price;
 		}
-		public Integer getStock() {
-			return stock;
-		}
-		public void setStock(Integer stock) {
-			this.stock = stock;
-		}
+
 		public String getCategory() {
 			return category;
 		}
+
 		public void setCategory(String category) {
 			this.category = category;
 		}
-		public ProductResponseDto(Long id, String name, String description, BigDecimal price, Integer stock,
-				String category) {
-			super();
-			this.id = id;
-			this.name = name;
-			this.description = description;
-			this.price = price;
-			this.stock = stock;
-			this.category = category;
+
+		@Override
+		public String toString() {
+			return "ProductResponseDto [productId=" + productId + ", name=" + name + ", description=" + description
+					+ ", price=" + price + ", category=" + category + "]";
 		}
-	    
-	    public ProductResponseDto() {
+
+		public ProductResponseDto() {
 	    	
 	    }
 

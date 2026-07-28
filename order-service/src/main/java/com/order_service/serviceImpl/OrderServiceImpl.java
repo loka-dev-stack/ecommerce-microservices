@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.inventory_service.dto.InventoryResponseDto;
+import com.order_service.client.InventoryClient;
 import com.order_service.client.ProductClient;
 import com.order_service.client.UserClient;
 import com.order_service.dto.OrderRequestDto;
@@ -29,9 +31,12 @@ public class OrderServiceImpl implements OrderService {
 	private ProductClient productclient;
 	@Autowired
 	private UserClient userClient;
+	@Autowired
+	private InventoryClient inventoryClient;
 
 	private static final Logger logger =
             LoggerFactory.getLogger(OrderServiceImpl.class);
+	
 	
 	private Orders mapToEntity(OrderRequestDto dto) {
 		
@@ -50,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 		 response.setUserId(orders.getUserId());
 		    response.setProductId(orders.getProductId());
 		    response.setQuantity(orders.getQuantity());
-		    response.setPrice(orders.getPrice());
+		    response.setunitPrice(orders.getUnitPrice());
 		    response.setTotalAmount(orders.getTotalAmount());
 		    response.setOrderStatus(orders.getOrderStatus());
 		    response.setPaymentStatus(orders.getPaymentStatus());
@@ -64,6 +69,13 @@ public class OrderServiceImpl implements OrderService {
 	public OrderResponseDto createOrder(OrderRequestDto dto) {
 	ProductResponseDto product = productclient.getProductById(dto.getProductId());
 	UserResponseDto user = userClient.getUserById(dto.getUserId());
+	
+	InventoryResponseDto inventory =
+	        inventoryClient.getInventoryByProductId(dto.getProductId());
+	
+	if (inventory.getQuantity() < dto.getQuantity()) {
+	    throw new RuntimeException("Insufficient stock available");
+	}
 	   
 //	 Orders orders = new Orders();
 //	 orders.setUserId(dto.getUserId());
@@ -72,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
 //	 orders.setDeliveryAddress(dto.getDeliveryAddress());
 	Orders orders = mapToEntity(dto);
 	 
-	 orders.setPrice(product.getPrice());
+	 orders.setUnitPrice(product.getPrice());
 	 
 	 // Step 4: Calculate total amount
 	    BigDecimal totalAmount = product.getPrice()
@@ -84,7 +96,9 @@ public class OrderServiceImpl implements OrderService {
 	    orders.setOrderDate(LocalDateTime.now());
 	    
 	    Orders save = ordersrepo.save(orders);
-	    
+	    inventoryClient.reduceStock(
+	            dto.getProductId(),
+	            dto.getQuantity());
 	    
 	return mapToResponse(save);
 	}
@@ -113,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 			 orders.setProductId(dto.getProductId());
 			 orders.setQuantity(dto.getQuantity());
 			 orders.setDeliveryAddress(dto.getDeliveryAddress());
-			orders.setPrice(product.getPrice());
+			orders.setUnitPrice(product.getPrice());
 			BigDecimal totalAmount = product.getPrice()
 		            .multiply(BigDecimal.valueOf(dto.getQuantity()));
 			orders.setTotalAmount(totalAmount);
@@ -127,6 +141,8 @@ public class OrderServiceImpl implements OrderService {
 		Orders order = ordersrepo.findById(Id).orElseThrow(()-> new OrderNotFoundException("Order Not found "+Id));;
 		 ordersrepo.delete(order);
 	}
+	
+	
 	
 
 }

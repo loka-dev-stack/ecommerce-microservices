@@ -35,8 +35,13 @@ public class UserController {
 	
 	
 	@PostMapping("/register")
-	public UserResponseDto registerUser(@Valid @RequestBody UserRequestDto dto) {
+	public UserResponseDto registerUser(@RequestBody UserRequestDto dto) {
 	    System.out.println(dto);
+	    System.out.println("========== CONTROLLER HIT ==========");
+	    System.out.println(dto.getFirstName());
+	    System.out.println(dto.getLastName());
+	    System.out.println(dto.getEmail());
+
 
 		return services.saveuser(dto);
 	}

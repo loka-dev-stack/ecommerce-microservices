@@ -14,11 +14,11 @@ public interface ProductService {
 			
 		List<ProductResponseDto> getAllProducts();
 		
-		ProductResponseDto getProductById(Long id);
+		ProductResponseDto getProductById(Long productId);
 		
-		ProductResponseDto getUpdateById(Long id, ProductRequestDto dto);	
+		ProductResponseDto getUpdateById(Long productId, ProductRequestDto dto);	
 		
-		void deleteProduct(Long id);
+		void deleteProduct(Long productId);
 		
 //		Page<ProductResponseDto> getAllProducts(int page, int size);
 		

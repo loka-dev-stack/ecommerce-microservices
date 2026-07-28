@@ -9,85 +9,96 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="products")
 public class Product {
-	 @Id
+	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long Id;
-	 @Column(nullable = false)
+	    @Column(name="product_id")
+	    private Long productId;
+	    @Column(nullable=false,length=150)
 	    private String name;
-
+	    @Column(nullable = false, length = 500)
 	    private String description;
 
-	    @Column(nullable = false)
+	    @Column(nullable=false, precision=10, scale=2)
 	    private BigDecimal price;
 
 	    @Column(nullable = false)
 	    private Integer stock;
-
+	    @Column(nullable = false, length = 500)
 	    private String category;
 
-		public Product(Long Id, String name, String description, BigDecimal price, Integer stock,
-				String category) {
-			super();
-			this.Id = Id;
-			this.name = name;
-			this.description = description;
-			this.price = price;
-			this.stock = stock;
-			this.category = category;
-		}
-
+		
 		public Product() {
 			// TODO Auto-generated constructor stub
 		}
 
-		public Long getId() {
-			return Id;
+
+		public Long getProductId() {
+			return productId;
 		}
 
-		public void setId(Long id) {
-			this.Id = id;
+
+		public void setProductId(Long productId) {
+			this.productId = productId;
 		}
+
 
 		public String getName() {
 			return name;
 		}
 
+
 		public void setName(String name) {
 			this.name = name;
 		}
+
 
 		public String getDescription() {
 			return description;
 		}
 
+
 		public void setDescription(String description) {
 			this.description = description;
 		}
+
 
 		public BigDecimal getPrice() {
 			return price;
 		}
 
+
 		public void setPrice(BigDecimal price) {
 			this.price = price;
 		}
+
 
 		public Integer getStock() {
 			return stock;
 		}
 
+
 		public void setStock(Integer stock) {
 			this.stock = stock;
 		}
+
 
 		public String getCategory() {
 			return category;
 		}
 
+
 		public void setCategory(String category) {
 			this.category = category;
 		}
 
+
+		@Override
+		public String toString() {
+			return "Product [productId=" + productId + ", name=" + name + ", description=" + description + ", price="
+					+ price + ", stock=" + stock + ", category=" + category + "]";
+		}
+
+		
 
 	
 

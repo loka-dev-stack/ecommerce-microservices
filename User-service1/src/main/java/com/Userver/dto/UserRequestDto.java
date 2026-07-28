@@ -14,17 +14,17 @@ public class UserRequestDto {
 	@Email(message="Invalid email")
 	private String email;
 	
-	@Size(min = 6, message = "Password must be at least 6 characters")
+	@Size(min = 8, message = "Password must be at least 8 characters")
 	private String password ;
 	
 	private String role ;
 
-	public String getFirstname() {
-		return firstName;
+	public String getFirstName() {
+	    return firstName;
 	}
 
-	public void setFirstname(String firstName) {
-		this.firstName = firstName;
+	public void setFirstName(String firstName) {
+	    this.firstName = firstName;
 	}
 
 	public String getLastName() {

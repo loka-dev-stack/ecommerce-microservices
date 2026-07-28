@@ -12,34 +12,29 @@ public class ProductRequestDto {
 	
 	@NotBlank(message = "Product name is required")
     private String name;
-    @NotBlank(message = "description cannot be blank")
+    @NotBlank(message = "Description is required ")
     private String description;
 
     @NotNull(message = "Price is required")
     @Positive(message = "Price must be greater than 0")
     private BigDecimal price;
-
-    @NotNull(message = "Stock is required")
-    @PositiveOrZero(message = "Stock cannot be negative")
-    private Integer stock;
     
-    @NotBlank(message = "catagory required")
+    @NotBlank(message = "catagory is required")
     private String category;
     
     public ProductRequestDto() {
     	
     }
 
-	public ProductRequestDto(@NotBlank(message = "Product name is required") String name, String description,
-			@NotNull(message = "Price is required") @Positive(message = "Price must be greater than 0") BigDecimal price,
-			@NotNull(message = "Stock is required") Integer stock, String category) {
-		super();
+	 public ProductRequestDto(String name,
+		            String description,
+		            BigDecimal price,
+		            String category) {
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.stock = stock;
 		this.category = category;
-	}
+		}
 
 	public String getName() {
 		return name;
@@ -63,14 +58,6 @@ public class ProductRequestDto {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
-	}
-
-	public Integer getStock() {
-		return stock;
-	}
-
-	public void setStock(Integer stock) {
-		this.stock = stock;
 	}
 
 	public String getCategory() {

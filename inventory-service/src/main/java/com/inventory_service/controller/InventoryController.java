@@ -53,4 +53,21 @@ public class InventoryController {
     	return ResponseEntity.ok(inventoryService.updateInventory(id, dto));
     	
     }
+    
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<InventoryResponseDto> getInventoryByProductId(
+            @PathVariable Long productId) {
+
+        return ResponseEntity.ok(
+                inventoryService.getInventoryByProductId(productId));
+    }
+    
+    @PutMapping("/reduce/{productId}/{quantity}")
+    public ResponseEntity<InventoryResponseDto> reduceStock(
+            @PathVariable Long productId,
+            @PathVariable Integer quantity) {
+
+        return ResponseEntity.ok(
+                inventoryService.reduceStock(productId, quantity));
+    }
 }

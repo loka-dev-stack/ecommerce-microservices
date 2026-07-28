@@ -38,7 +38,7 @@ public class ServiceImpl implements ProductService{
 		log.info("Creating new product with name: {}", dto.getName());
 		Product product = mapToEntity(dto);
 		Product saveproduct = productRepository.save(product);
-	    log.info("Product created successfully. ID: {}", saveproduct.getId());
+	    log.info("Product created successfully. ID: {}", saveproduct.getProductId());
 
 		return mapToDto(saveproduct);
 		
@@ -76,48 +76,47 @@ public class ServiceImpl implements ProductService{
 		
 	}
 	@Override
-	public ProductResponseDto getProductById(Long id) {
+	public ProductResponseDto getProductById(Long productId) {
 		
-		log.info("Fetching product with ID: {}", id);
+		log.info("Fetching product with ID: {}", productId);
 		
-		Product product = productRepository.findById(id)
+		Product product = productRepository.findById(productId)
 	            .orElseThrow(() -> {
-	                log.warn("Product not found with ID: {}", id);
-	                return new ProductNotFoundException("Product not found with ID: " + id);
+	                log.warn("Product not found with ID: {}", productId);
+	                return new ProductNotFoundException("Product not found with ID: " + productId);
 	            });
 		
-	    log.info("Product found with ID: {}", id);
+	    log.info("Product found with ID: {}", productId);
 		
 		 return mapToDto(product);
 		
 	}
 	@Override
-	public void deleteProduct(Long id) {
-		log.info("Deleting product with ID: {}", id);
-		Product product =productRepository.findById(id).
-				orElseThrow(()->new ProductNotFoundException("product not found"+ id));
+	public void deleteProduct(Long productId) {
+		log.info("Deleting product with ID: {}", productId);
+		Product product =productRepository.findById(productId).
+				orElseThrow(()->new ProductNotFoundException("product not found"+ productId));
 		
 		productRepository.delete(product);
-		log.info("Product deleted successfully with ID: {}", id);
+		log.info("Product deleted successfully with ID: {}", productId);
 	}
 	@Override
-	public ProductResponseDto getUpdateById(Long id, ProductRequestDto dto) {
-		 log.info("Updating product with ID: {}", id);
-		Product product = productRepository.findById(id).
+	public ProductResponseDto getUpdateById(Long productId, ProductRequestDto dto) {
+		 log.info("Updating product with ID: {}", productId);
+		Product product = productRepository.findById(productId).
 				orElseThrow(()->{
-					log.warn("product not found with Id:{}",id);
-				return new ProductNotFoundException("Product not found with ID: "+ id);
+					log.warn("product not found with Id:{}",productId);
+				return new ProductNotFoundException("Product not found with ID: "+ productId);
 				});
 		
 		
 		product.setName(dto.getName());
 		product.setDescription(dto.getDescription());
 		product.setPrice(dto.getPrice());
-		product.setStock(dto.getStock());
 		product.setCategory(dto.getCategory());
 				
 		Product updateproduct = productRepository.save(product);
-		log.info("Product updated successfully with ID: {}", id);
+		log.info("Product updated successfully with ID: {}", productId);
 		return mapToDto(updateproduct);
 	}
 	
@@ -127,7 +126,6 @@ public class ServiceImpl implements ProductService{
 		product.setName(ex.getName());
 		product.setCategory(ex.getCategory());
 		product.setDescription(ex.getDescription());
-		product.setStock(ex.getStock());
 		product.setPrice(ex.getPrice());
 		
 		return product;
@@ -138,12 +136,11 @@ public class ServiceImpl implements ProductService{
 	
 		
 	 ProductResponseDto response = new ProductResponseDto();
-	 response.setId(product.getId());
+	 response.setProductId(product.getProductId());
 	 response.setName(product.getName());
 	 response.setCategory(product.getCategory());
 	 response.setDescription(product.getDescription());
 	 response.setPrice(product.getPrice());
-	 response.setStock(product.getStock());
 	 return response;	
 
 }

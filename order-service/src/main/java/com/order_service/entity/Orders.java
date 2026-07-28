@@ -3,7 +3,7 @@ package com.order_service.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,32 +12,54 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name="Orders_table")
+@Table(name="Orders")
 public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 
+	@Column(nullable = false)
 	private Long userId;
 
+	@Column(nullable = false)
 	private Long productId;
 
+	@Column(nullable = false)
 	private Integer quantity;
 
-	private BigDecimal price;
+	@Column(nullable = false, precision = 10, scale = 2)
+	private BigDecimal unitPrice;
 
+	@Column(nullable = false, precision = 10, scale = 2)
 	private BigDecimal totalAmount;
 
+	@Column(nullable = false)
 	private String orderStatus;
 
+	@Column(nullable = false)
 	private String paymentStatus;
 
+	@Column(nullable = false)
 	private LocalDateTime orderDate;
+
+	@Column(nullable = false, length = 300)
+	private String deliveryAddress;
+	
+	
+
+	
+	@Override
+	public String toString() {
+		return "Orders [orderId=" + orderId + ", userId=" + userId + ", productId=" + productId + ", quantity="
+				+ quantity + ", unitPrice=" + unitPrice + ", totalAmount=" + totalAmount + ", orderStatus="
+				+ orderStatus + ", paymentStatus=" + paymentStatus + ", orderDate=" + orderDate + ", deliveryAddress="
+				+ deliveryAddress + "]";
+	}
+
 
 	public Long getOrderId() {
 		return orderId;
 	}
-
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
@@ -53,7 +75,7 @@ public class Orders {
 	public Long getProductId() {
 		return productId;
 	}
-
+	
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
@@ -66,12 +88,12 @@ public class Orders {
 		this.quantity = quantity;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
 	}
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
 	}
 
 	public BigDecimal getTotalAmount() {
@@ -114,16 +136,7 @@ public class Orders {
 		this.deliveryAddress = deliveryAddress;
 	}
 
-	private String deliveryAddress;
 
-	@Override
-	public String toString() {
-		return "Orders [orderId=" + orderId + ", userId=" + userId + ", productId=" + productId + ", quantity="
-				+ quantity + ", price=" + price + ", totalAmount=" + totalAmount + ", orderStatus=" + orderStatus
-				+ ", paymentStatus=" + paymentStatus + ", orderDate=" + orderDate + ", deliveryAddress="
-				+ deliveryAddress + "]";
-	}
-	
 	public Orders() {
 		
 	}

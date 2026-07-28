@@ -15,7 +15,7 @@ public class OrderResponseDto {
 
 	    private Integer quantity;
 
-	    private BigDecimal price;
+	    private BigDecimal unitPrice;
 
 	    private BigDecimal totalAmount;
 
@@ -59,12 +59,12 @@ public class OrderResponseDto {
 			this.quantity = quantity;
 		}
 
-		public BigDecimal getPrice() {
-			return price;
+		public BigDecimal getunitPrice() {
+			return unitPrice;
 		}
 
-		public void setPrice(BigDecimal price) {
-			this.price = price;
+		public void setunitPrice(BigDecimal unitPrice) {
+			this.unitPrice = unitPrice;
 		}
 
 		public BigDecimal getTotalAmount() {
@@ -110,7 +110,7 @@ public class OrderResponseDto {
 		@Override
 		public String toString() {
 			return "OrderResponseDto [orderId=" + orderId + ", userId=" + userId + ", productId=" + productId
-					+ ", quantity=" + quantity + ", price=" + price + ", totalAmount=" + totalAmount + ", orderStatus="
+					+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", totalAmount=" + totalAmount + ", orderStatus="
 					+ orderStatus + ", paymentStatus=" + paymentStatus + ", orderDate=" + orderDate
 					+ ", deliveryAddress=" + deliveryAddress + "]";
 		}

@@ -39,7 +39,7 @@ public class UserServiceIMPL implements UserService {
 	public UserResponseDto saveuser(UserRequestDto dto) {
 		
 		User user = new User();
-		 user.setFirstName(dto.getFirstname());
+		 user.setFirstName(dto.getFirstName());
 		 user.setLastName(dto.getLastName());
 		 user.setEmail(dto.getEmail());
 		 user.setPassword(passwordencoder.encode(dto.getPassword()));
