@@ -46,7 +46,7 @@ public class UserController {
 		return services.saveuser(dto);
 	}
 	
-	@GetMapping
+	@GetMapping("/all")
     public List<User> getAllUsers() {
         return services.getallUsers();
     }
